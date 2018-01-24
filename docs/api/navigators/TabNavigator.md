@@ -97,6 +97,7 @@ Several options get passed to the underlying router to modify navigation logic:
 - `order` - Array of routeNames which defines the order of the tabs.
 - `paths` - Provide a mapping of routeName to path config, which overrides the paths set in the routeConfigs.
 - `backBehavior` - Should the back button cause a tab switch to the initial tab? If yes, set to `initialRoute`, otherwise `none`. Defaults to `initialRoute` behavior.
+- `hiddenTabs` - Array of routeNames that you don't want displayed in the TabBar. Only TabBarBottom will hide tabs at the moment. To show hidden tabs, dispatch the `showTab` action. Note that you can still navigate to hidden tabs by firing the `navigate` action.
 
 ### `tabBarOptions` for `TabBarBottom` (default tab bar on iOS)
 

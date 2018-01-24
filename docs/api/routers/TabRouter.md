@@ -48,8 +48,9 @@ Config options that are also passed to the router.
 
 - `initialRouteName` - The routeName for the initial tab route when first loading
 - `order` - Array of routeNames which defines the order of the tabs
-- `paths` - Provide a mapping of routeName to path config, which overrides the paths set in the routeConfigs.
-- `backBehavior` - Should the back button cause a tab switch to the initial tab? If yes, set to `initialRoute`, otherwise `none`. Defaults to `initialRoute` behavior.
+- `paths` - Provide a mapping of routeName to path config, which overrides the paths set in the routeConfigs
+- `backBehavior` - Should the back button cause a tab switch to the initial tab? If yes, set to `initialRoute`, otherwise `none`. Defaults to `initialRoute` behavior
+- `hiddenTabs` - Array of routeNames which you want not to be shown in the TabBar (only BottomTabBar is supported at the moment)
 
 ### Supported Actions
 
@@ -57,4 +58,6 @@ The tabs router may respond to the following navigation actions. The router will
 
 - Navigate - Will jump to the routeName if it matches a tab
 - Back - Goes to the first tab, if not already selected
-- SetParams - An action that a screen dispatches to change the params of the current route.
+- SetParams - An action that a screen dispatches to change the params of the current route
+- ShowTab - Will show the tab in the TabBar corresponding to the `tabRouteName` given as parameter
+- HideTab - Will hide the tab in the TabBar corresponding to the `tabRouteName` given as parameter

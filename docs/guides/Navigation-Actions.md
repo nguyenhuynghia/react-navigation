@@ -10,6 +10,8 @@ The following actions are supported:
 * [Back](#Back) - Go back to previous state
 * [Set Params](#SetParams) - Set Params for given route
 * [Init](#Init) - Used to initialize first state if state is undefined
+* [HideTab](#HideTab) - Hide a tab from the TabBar. You can still navigate to it with the `Navigate` action
+* [ShowTab](#ShowTab) - Make a hidden tab visible again in the TabBar
 
 The action creator functions define `toString()` to return the action type, which enables easy usage with third-party Redux libraries, including redux-actions and redux-saga.
 
@@ -24,14 +26,10 @@ The `Navigate` action will update the current state with the result of a `Naviga
 import { NavigationActions } from 'react-navigation'
 
 const navigateAction = NavigationActions.navigate({
-
   routeName: 'Profile',
-
   params: {},
-
   action: NavigationActions.navigate({ routeName: 'SubProfileRoute'})
 })
-
 this.props.navigation.dispatch(navigateAction)
 
 ```
@@ -107,5 +105,35 @@ const setParamsAction = NavigationActions.setParams({
   key: 'screen-123',
 })
 this.props.navigation.dispatch(setParamsAction)
+
+```
+
+### HideTab
+
+Hide a tab from the TabBar. Only TabBarBottom (the default TabBar on iOS) supports hiding tabs at the moment. The `HideTab` action requires one parameter:
+- `tabRouteName` - *string* - the name of the route defined in the `RouteConfigs` of your TabNavigator or TabRouter for the tab you want to hide.
+
+```js
+import { NavigationActions } from 'react-navigation'
+
+const hideTabAction = NavigationActions.hideTab({
+  tabRouteName: 'MyTab'
+})
+this.props.navigation.dispatch(hideTabAction)
+
+```
+
+### ShowTab
+
+Show a hidden tab in the TabBar. Only TabBarBottom (the default TabBar on iOS) supports hiding tabs at the moment. The `ShowTab` action requires one parameter:
+- `tabRouteName` - *string* - required - the name of the route defined in the `RouteConfigs` of your TabNavigator or TabRouter for the tab you want to show.
+
+```js
+import { NavigationActions } from 'react-navigation'
+
+const showTabAction = NavigationActions.showTab({
+  tabRouteName: 'MyTab'
+})
+this.props.navigation.dispatch(showTabAction)
 
 ```
