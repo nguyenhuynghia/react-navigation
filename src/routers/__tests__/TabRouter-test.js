@@ -27,8 +27,8 @@ describe('TabRouter', () => {
     const expectedState = {
       index: 0,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     expect(state).toEqual(expectedState);
@@ -39,8 +39,8 @@ describe('TabRouter', () => {
     const expectedState2 = {
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     expect(state2).toEqual(expectedState2);
@@ -64,8 +64,8 @@ describe('TabRouter', () => {
     const expectedState = {
       index: 0,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     expect(state).toEqual(expectedState);
@@ -76,8 +76,8 @@ describe('TabRouter', () => {
     const expectedState2 = {
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     expect(state2).toEqual(expectedState2);
@@ -99,8 +99,8 @@ describe('TabRouter', () => {
     expect(state).toEqual({
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     });
   });
@@ -177,19 +177,23 @@ describe('TabRouter', () => {
         {
           key: 'Foo',
           routeName: 'Foo',
+          hidden: false,
         },
         {
           index: 1,
           key: 'Baz',
           routeName: 'Baz',
+          hidden: false,
           routes: [
             {
               key: 'Foo',
               routeName: 'Foo',
+              hidden: false,
             },
             {
               key: 'Bar',
               routeName: 'Bar',
+              hidden: false,
               params,
             },
           ],
@@ -197,6 +201,7 @@ describe('TabRouter', () => {
         {
           key: 'Boo',
           routeName: 'Boo',
+          hidden: false,
         },
       ],
     });
@@ -220,14 +225,15 @@ describe('TabRouter', () => {
     expect(state).toEqual({
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
         {
           index: 0,
           key: 'Baz',
           routeName: 'Baz',
+          hidden: false,
           routes: [
-            { key: 'Boo', routeName: 'Boo' },
-            { key: 'Bar', routeName: 'Bar' },
+            { key: 'Boo', routeName: 'Boo', hidden: false },
+            { key: 'Bar', routeName: 'Bar', hidden: false },
           ],
         },
       ],
@@ -246,9 +252,10 @@ describe('TabRouter', () => {
       index: 0,
       key: 'Baz',
       routeName: 'Baz',
+      hidden: false,
       routes: [
-        { key: 'Boo', routeName: 'Boo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Boo', routeName: 'Boo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     });
   });
@@ -271,17 +278,18 @@ describe('TabRouter', () => {
     expect(state).toEqual({
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
         {
           index: 1,
           key: 'Baz',
           routeName: 'Baz',
+          hidden: false,
           routes: [
-            { key: 'Foo', routeName: 'Foo' },
-            { key: 'Bar', routeName: 'Bar' },
+            { key: 'Foo', routeName: 'Foo', hidden: false },
+            { key: 'Bar', routeName: 'Bar', hidden: false },
           ],
         },
-        { key: 'Boo', routeName: 'Boo' },
+        { key: 'Boo', routeName: 'Boo', hidden: false },
       ],
     });
     const state2 = router.getStateForAction(
@@ -291,17 +299,18 @@ describe('TabRouter', () => {
     expect(state2).toEqual({
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
         {
           index: 0,
           key: 'Baz',
           routeName: 'Baz',
+          hidden: false,
           routes: [
-            { key: 'Foo', routeName: 'Foo' },
-            { key: 'Bar', routeName: 'Bar' },
+            { key: 'Foo', routeName: 'Foo', hidden: false },
+            { key: 'Bar', routeName: 'Bar', hidden: false },
           ],
         },
-        { key: 'Boo', routeName: 'Boo' },
+        { key: 'Boo', routeName: 'Boo', hidden: false },
       ],
     });
     const state3 = router.getStateForAction(
@@ -339,28 +348,31 @@ describe('TabRouter', () => {
           index: 0,
           key: 'Foo',
           routeName: 'Foo',
+          hidden: false,
           routes: [
             {
               index: 0,
               key: 'Foo',
               routeName: 'Foo',
+              hidden: false,
               routes: [
-                { key: 'Boo', routeName: 'Boo' },
-                { key: 'Baz', routeName: 'Baz' },
+                { key: 'Boo', routeName: 'Boo', hidden: false },
+                { key: 'Baz', routeName: 'Baz', hidden: false },
               ],
             },
             {
               index: 0,
               key: 'Bar',
               routeName: 'Bar',
+              hidden: false,
               routes: [
-                { key: 'Zoo', routeName: 'Zoo' },
-                { key: 'Zap', routeName: 'Zap' },
+                { key: 'Zoo', routeName: 'Zoo', hidden: false },
+                { key: 'Zap', routeName: 'Zap', hidden: false },
               ],
             },
           ],
         },
-        { key: 'Gah', routeName: 'Gah' },
+        { key: 'Gah', routeName: 'Gah', hidden: false },
       ],
     });
     const state2 = router.getStateForAction(
@@ -374,28 +386,31 @@ describe('TabRouter', () => {
           index: 1,
           key: 'Foo',
           routeName: 'Foo',
+          hidden: false,
           routes: [
             {
               index: 0,
               key: 'Foo',
               routeName: 'Foo',
+              hidden: false,
               routes: [
-                { key: 'Boo', routeName: 'Boo' },
-                { key: 'Baz', routeName: 'Baz' },
+                { key: 'Boo', routeName: 'Boo', hidden: false },
+                { key: 'Baz', routeName: 'Baz', hidden: false },
               ],
             },
             {
               index: 1,
               key: 'Bar',
               routeName: 'Bar',
+              hidden: false,
               routes: [
-                { key: 'Zoo', routeName: 'Zoo' },
-                { key: 'Zap', routeName: 'Zap' },
+                { key: 'Zoo', routeName: 'Zoo', hidden: false },
+                { key: 'Zap', routeName: 'Zap', hidden: false },
               ],
             },
           ],
         },
-        { key: 'Gah', routeName: 'Gah' },
+        { key: 'Gah', routeName: 'Gah', hidden: false },
       ],
     });
     const state3 = router.getStateForAction(
@@ -419,28 +434,31 @@ describe('TabRouter', () => {
           index: 1,
           key: 'Foo',
           routeName: 'Foo',
+          hidden: false,
           routes: [
             {
               index: 0,
               key: 'Foo',
               routeName: 'Foo',
+              hidden: false,
               routes: [
-                { key: 'Boo', routeName: 'Boo' },
-                { key: 'Baz', routeName: 'Baz' },
+                { key: 'Boo', routeName: 'Boo', hidden: false },
+                { key: 'Baz', routeName: 'Baz', hidden: false },
               ],
             },
             {
               index: 1,
               key: 'Bar',
               routeName: 'Bar',
+              hidden: false,
               routes: [
-                { key: 'Zoo', routeName: 'Zoo' },
-                { key: 'Zap', routeName: 'Zap' },
+                { key: 'Zoo', routeName: 'Zoo', hidden: false },
+                { key: 'Zap', routeName: 'Zap', hidden: false },
               ],
             },
           ],
         },
-        { key: 'Gah', routeName: 'Gah' },
+        { key: 'Gah', routeName: 'Gah', hidden: false },
       ],
     });
   });
@@ -471,8 +489,8 @@ describe('TabRouter', () => {
     const expectedState = {
       index: 0,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     expect(state).toEqual(expectedState);
@@ -480,8 +498,8 @@ describe('TabRouter', () => {
     const expectedState2 = {
       index: 1,
       routes: [
-        { key: 'Foo', routeName: 'Foo' },
-        { key: 'Bar', routeName: 'Bar', params },
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params },
       ],
     };
     expect(state2).toEqual(expectedState2);
@@ -539,11 +557,11 @@ describe('TabRouter', () => {
           key: 'Foo',
           routeName: 'Foo',
           routes: [
-            { key: 'Boo', routeName: 'Boo' },
-            { key: 'Baz', routeName: 'Baz' },
+            { key: 'Boo', routeName: 'Boo', hidden: false },
+            { key: 'Baz', routeName: 'Baz', hidden: false },
           ],
         },
-        { key: 'Bar', routeName: 'Bar' },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
     };
     const { path } = router.getPathAndParamsForState(state);
@@ -588,7 +606,10 @@ describe('TabRouter', () => {
 
     expect(state0).toEqual({
       index: 0,
-      routes: [{ key: 'a', routeName: 'a' }, { key: 'b', routeName: 'b' }],
+      routes: [
+        { key: 'a', routeName: 'a', hidden: false },
+        { key: 'b', routeName: 'b', hidden: false },
+      ],
     });
 
     const params = { key: 'value' };
@@ -601,8 +622,8 @@ describe('TabRouter', () => {
     expect(state1).toEqual({
       index: 1,
       routes: [
-        { key: 'a', routeName: 'a' },
-        { key: 'b', routeName: 'b', params },
+        { key: 'a', routeName: 'a', hidden: false },
+        { key: 'b', routeName: 'b', hidden: false, params },
       ],
     });
   });
@@ -646,7 +667,7 @@ describe('TabRouter', () => {
     const comparable = (state: RouteOrState): ComparableRoute => {
       let result = {};
       if (typeof state.routeName === 'string') {
-        result = { ...result, routeName: state.routeName };
+        result = { routeName: state.routeName };
       }
       if (state.routes instanceof Array) {
         result = {
@@ -672,5 +693,105 @@ describe('TabRouter', () => {
     expect(expectedState && comparable(expectedState)).toEqual(
       innerState && comparable(innerState)
     );
+  });
+
+  test('Un-hides a hidden tab', () => {
+    const ScreenA = () => <div />;
+    const ScreenB = () => <div />;
+    const router = TabRouter(
+      {
+        Foo: { screen: ScreenA },
+        Bar: { screen: ScreenB },
+      },
+      {
+        hiddenTabs: ['Bar'],
+      }
+    );
+    // It inits the navigation state with hidden: true for the Bar tab
+    const state = router.getStateForAction({ type: NavigationActions.INIT });
+    const expectedState = {
+      index: 0,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: true },
+      ],
+    };
+    expect(state).toEqual(expectedState);
+    // It sets hidden: false for the Bar tab
+    const state2 = router.getStateForAction(
+      { type: NavigationActions.SHOW_TAB, tabRouteName: 'Bar' },
+      state
+    );
+    const expectedState2 = {
+      index: 0,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
+      ],
+    };
+    expect(state2).toEqual(expectedState2);
+    // It navigates to the Bar tab
+    const state3 = router.getStateForAction(
+      { type: NavigationActions.NAVIGATE, routeName: 'Bar' },
+      state2
+    );
+    const expectedState3 = {
+      index: 1,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
+      ],
+    };
+    expect(state3).toEqual(expectedState3);
+    expect(router.getComponentForState(expectedState2)).toEqual(ScreenA);
+    expect(router.getComponentForState(expectedState3)).toEqual(ScreenB);
+  });
+
+  test('Hides a shown tab', () => {
+    const ScreenA = () => <div />;
+    const ScreenB = () => <div />;
+    const router = TabRouter({
+      Foo: { screen: ScreenA },
+      Bar: { screen: ScreenB },
+    });
+    // It inits the navigation state with hidden: false for the all tabs
+    const state = router.getStateForAction({ type: NavigationActions.INIT });
+    const expectedState = {
+      index: 0,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: false },
+      ],
+    };
+    expect(state).toEqual(expectedState);
+    // It sets hidden: true for the Bar tab
+    const state2 = router.getStateForAction(
+      { type: NavigationActions.HIDE_TAB, tabRouteName: 'Bar' },
+      state
+    );
+    const expectedState2 = {
+      index: 0,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: true },
+      ],
+    };
+    expect(state2).toEqual(expectedState2);
+    // It navigates to the hidden Bar tab
+    // NOTE: Should we be able to navigate explicitly to a hidden tab ? Maybe send a warning
+    const state3 = router.getStateForAction(
+      { type: NavigationActions.NAVIGATE, routeName: 'Bar' },
+      state2
+    );
+    const expectedState3 = {
+      index: 1,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        { key: 'Bar', routeName: 'Bar', hidden: true },
+      ],
+    };
+    expect(state3).toEqual(expectedState3);
+    expect(router.getComponentForState(expectedState2)).toEqual(ScreenA);
+    expect(router.getComponentForState(expectedState3)).toEqual(ScreenB);
   });
 });

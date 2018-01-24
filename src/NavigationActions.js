@@ -12,6 +12,8 @@ import type {
   NavigationSetParamsAction,
   NavigationResetAction,
   NavigationUriAction,
+  NavigationShowTabAction,
+  NavigationHideTabAction,
   NavigationParams,
 } from './TypeDefinition';
 
@@ -21,6 +23,8 @@ const NAVIGATE = 'Navigation/NAVIGATE';
 const RESET = 'Navigation/RESET';
 const SET_PARAMS = 'Navigation/SET_PARAMS';
 const URI = 'Navigation/URI';
+const SHOW_TAB = 'Navigation/SHOW_TAB';
+const HIDE_TAB = 'Navigation/HIDE_TAB';
 
 const createAction = (type: string, fn: any) => {
   fn.toString = () => type;
@@ -97,6 +101,20 @@ const uri = createAction(
     uri: payload.uri,
   })
 );
+const showTab = createAction(
+  SHOW_TAB,
+  (payload: { tabRouteName: string }): NavigationShowTabAction => ({
+    type: SHOW_TAB,
+    tabRouteName: payload.tabRouteName,
+  })
+);
+const hideTab = createAction(
+  HIDE_TAB,
+  (payload: { tabRouteName: string }): NavigationHideTabAction => ({
+    type: HIDE_TAB,
+    tabRouteName: payload.tabRouteName,
+  })
+);
 
 const mapDeprecatedNavigateAction = (
   action: NavigationNavigateAction | DeprecatedNavigationNavigateAction
@@ -165,6 +183,8 @@ export default {
   RESET,
   SET_PARAMS,
   URI,
+  SHOW_TAB,
+  HIDE_TAB,
 
   // Action creators
   back,
@@ -173,6 +193,8 @@ export default {
   reset,
   setParams,
   uri,
+  showTab,
+  hideTab,
 
   // TODO: Remove once old actions are deprecated
   mapDeprecatedActionAndWarn,

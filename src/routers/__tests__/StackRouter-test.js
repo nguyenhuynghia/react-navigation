@@ -785,11 +785,13 @@ describe('StackRouter', () => {
       {
         key: 'Baz',
         routeName: 'Baz',
+        hidden: false,
         params: { foo: '42' },
       },
       {
         key: 'Boo',
         routeName: 'Boo',
+        hidden: false,
         params: { foo: '42' },
       },
     ]);

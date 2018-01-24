@@ -192,6 +192,7 @@ class TabBarBottom extends React.PureComponent<Props> {
           forceInset={{ bottom: 'always', top: 'never' }}
         >
           {routes.map((route: NavigationRoute, index: number) => {
+            if (route.hidden) return null;
             const focused = index === navigation.state.index;
             const scene = { route, index, focused };
             const onPress = getOnPress(previousScene, scene);
@@ -218,7 +219,8 @@ class TabBarBottom extends React.PureComponent<Props> {
                 onPress={() =>
                   onPress
                     ? onPress({ previousScene, scene, jumpToIndex })
-                    : jumpToIndex(index)}
+                    : jumpToIndex(index)
+                }
               >
                 <Animated.View
                   style={[

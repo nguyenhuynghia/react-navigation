@@ -30,6 +30,7 @@ export default (
 
   const order = config.order || Object.keys(routeConfigs);
   const paths = config.paths || {};
+  const hiddenTabs = config.hiddenTabs || [];
   const initialRouteName = config.initialRouteName || order[0];
   const initialRouteIndex = order.indexOf(initialRouteName);
   const backBehavior = config.backBehavior || 'initialRoute';
@@ -66,11 +67,13 @@ export default (
               ...tabRouter.getStateForAction(childAction),
               key: routeName,
               routeName,
+              hidden: hiddenTabs.includes(routeName),
             };
           }
           return {
             key: routeName,
             routeName,
+            hidden: hiddenTabs.includes(routeName),
           };
         });
         state = {
@@ -191,6 +194,25 @@ export default (
             routes,
           };
         }
+      }
+      if (
+        action.type === NavigationActions.SHOW_TAB ||
+        action.type === NavigationActions.HIDE_TAB
+      ) {
+        // lets find the route of the tab to show/hide
+        const tabRouteName = action.tabRouteName;
+        const routes = [...state.routes];
+        for (let i: number = 0; i < routes.length; i++) {
+          if (routes[i].routeName === tabRouteName) {
+            // found the route, build the new state
+            routes[i].hidden = action.type === NavigationActions.HIDE_TAB;
+            return {
+              ...state,
+              routes,
+            };
+          }
+        }
+        // no routes seems to match tabRouteName, continue
       }
       if (activeTabIndex !== state.index) {
         return {

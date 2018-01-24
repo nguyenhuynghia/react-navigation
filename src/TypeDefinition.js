@@ -109,12 +109,24 @@ export type DeprecatedNavigationUriAction = {|
   uri: string,
 |};
 
+export type NavigationShowTabAction = {|
+  type: 'Navigation/SHOW_TAB',
+  tabRouteName: string,
+|};
+
+export type NavigationHideTabAction = {|
+  type: 'Navigation/HIDE_TAB',
+  tabRouteName: string,
+|};
+
 export type NavigationAction =
   | NavigationInitAction
   | NavigationNavigateAction
   | NavigationBackAction
   | NavigationSetParamsAction
-  | NavigationResetAction;
+  | NavigationResetAction
+  | NavigationShowTabAction
+  | NavigationHideTabAction;
 
 export type DeprecatedNavigationAction =
   | DeprecatedNavigationInitAction
@@ -170,6 +182,10 @@ export type NavigationLeafRoute = {
    * e.g. `{ car_id: 123 }` in a route that displays a car.
    */
   params?: NavigationParams,
+  /**
+   * If true, the tab connected to this route should not be shown in the TabBar component.
+   */
+  hidden?: boolean,
 };
 
 export type NavigationStateRoute = NavigationLeafRoute & NavigationState;
@@ -357,7 +373,7 @@ export type NavigationTabRouterConfig = {
   paths?: NavigationPathsConfig,
   navigationOptions?: NavigationScreenConfig<*>,
   order?: Array<string>, // todo: type these as the real route names rather than 'string'
-
+  hiddenTabs?: Array<string>,
   // Does the back button cause the router to switch to the initial tab
   backBehavior?: 'none' | 'initialRoute', // defaults `initialRoute`
 };
