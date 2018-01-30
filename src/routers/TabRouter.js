@@ -246,7 +246,11 @@ export default (
         if (tabState !== routes[i]) {
           routes = [...routes];
           routes[i] = tabState;
-          index = i;
+          if (
+            action.type !== NavigationActions.SHOW_TAB &&
+            action.type !== NavigationActions.HIDE_TAB
+          )
+            index = i;
           return true;
         }
         return false;
