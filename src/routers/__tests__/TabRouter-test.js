@@ -832,9 +832,10 @@ describe('TabRouter', () => {
     const state = router.getStateForAction({ type: NavigationActions.INIT });
     const expectedState = {
       index: 0,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: true },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: true, params: undefined },
       ],
     };
     expect(state).toEqual(expectedState);
@@ -845,9 +846,10 @@ describe('TabRouter', () => {
     );
     const expectedState2 = {
       index: 0,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: false },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params: undefined },
       ],
     };
     expect(state2).toEqual(expectedState2);
@@ -858,9 +860,10 @@ describe('TabRouter', () => {
     );
     const expectedState3 = {
       index: 1,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: false },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params: undefined },
       ],
     };
     expect(state3).toEqual(expectedState3);
@@ -879,9 +882,10 @@ describe('TabRouter', () => {
     const state = router.getStateForAction({ type: NavigationActions.INIT });
     const expectedState = {
       index: 0,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: false },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params: undefined },
       ],
     };
     expect(state).toEqual(expectedState);
@@ -892,9 +896,10 @@ describe('TabRouter', () => {
     );
     const expectedState2 = {
       index: 0,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: true },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: true, params: undefined },
       ],
     };
     expect(state2).toEqual(expectedState2);
@@ -906,9 +911,10 @@ describe('TabRouter', () => {
     );
     const expectedState3 = {
       index: 1,
+      isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', hidden: false },
-        { key: 'Bar', routeName: 'Bar', hidden: true },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: true, params: undefined },
       ],
     };
     expect(state3).toEqual(expectedState3);
