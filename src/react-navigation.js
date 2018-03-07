@@ -1,10 +1,4 @@
-/*
- * @flow
- */
-
 /* eslint global-require: 0 */
-
-/*:: export type * from './TypeDefinition'; */
 
 module.exports = {
   // Core
@@ -26,10 +20,10 @@ module.exports = {
     return require('./navigators/createNavigator').default;
   },
   get StackNavigator() {
-    return require('./navigators/StackNavigator').default;
+    return require('./navigators/createStackNavigator').default;
   },
   get TabNavigator() {
-    return require('./navigators/TabNavigator').default;
+    return require('./navigators/createTabNavigator').default;
   },
   get DrawerNavigator() {
     return require('./navigators/DrawerNavigator').default;
@@ -47,17 +41,14 @@ module.exports = {
   get Transitioner() {
     return require('./views/Transitioner').default;
   },
-  get CardStackTransitioner() {
-    return require('./views/CardStack/CardStackTransitioner').default;
+  get StackView() {
+    return require('./views/StackView/StackView').default;
   },
-  get CardStack() {
-    return require('./views/CardStack/CardStack').default;
-  },
-  get Card() {
-    return require('./views/CardStack/Card').default;
+  get StackViewCard() {
+    return require('./views/StackView/StackViewCard').default;
   },
   get SafeAreaView() {
-    return require('./views/SafeAreaView').default;
+    return require('react-native-safe-area-view').default;
   },
 
   // Header
@@ -93,5 +84,8 @@ module.exports = {
   // HOCs
   get withNavigation() {
     return require('./views/withNavigation').default;
+  },
+  get withNavigationFocus() {
+    return require('./views/withNavigationFocus').default;
   },
 };

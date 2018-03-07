@@ -1,44 +1,19 @@
-/* @flow */
-
-import * as React from 'react';
+import React from 'react';
 import { Dimensions, Platform, ScrollView } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import createNavigator from './createNavigator';
 import createNavigationContainer from '../createNavigationContainer';
-import TabRouter from '../routers/TabRouter';
+import DrawerRouter from '../routers/DrawerRouter';
 import DrawerScreen from '../views/Drawer/DrawerScreen';
 import DrawerView from '../views/Drawer/DrawerView';
 import DrawerItems from '../views/Drawer/DrawerNavigatorItems';
-import SafeAreaView from '../views/SafeAreaView';
-
-import NavigatorTypes from './NavigatorTypes';
-
-import type { DrawerViewConfig } from '../views/Drawer/DrawerView';
-import type {
-  NavigationState,
-  NavigationRouteConfigMap,
-  NavigationTabRouterConfig,
-  NavigationDrawerScreenOptions,
-  NavigationNavigatorProps,
-} from '../TypeDefinition';
-
-export type DrawerNavigatorConfig = {
-  containerConfig?: void,
-} & NavigationTabRouterConfig &
-  DrawerViewConfig;
 
 // A stack navigators props are the intersection between
 // the base navigator props (navgiation, screenProps, etc)
 // and the view's props
-type DrawerNavigatorProps = NavigationNavigatorProps<
-  NavigationDrawerScreenOptions,
-  NavigationState
-> &
-  React.ElementProps<typeof DrawerView>;
 
-const defaultContentComponent = (
-  props: React.ElementProps<typeof DrawerItems>
-) => (
+const defaultContentComponent = props => (
   <ScrollView alwaysBounceVertical={false}>
     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
       <DrawerItems {...props} />
@@ -63,80 +38,32 @@ const DefaultDrawerConfig = {
     return Math.min(smallerAxisSize - appBarHeight, maxWidth);
   },
   contentComponent: defaultContentComponent,
-  drawerOpenRoute: 'DrawerOpen',
-  drawerCloseRoute: 'DrawerClose',
-  drawerToggleRoute: 'DrawerToggle',
   drawerPosition: 'left',
   drawerBackgroundColor: 'white',
   useNativeAnimations: true,
 };
 
-const DrawerNavigator = (
-  routeConfigs: NavigationRouteConfigMap,
-  config: DrawerNavigatorConfig = {}
-) => {
+const DrawerNavigator = (routeConfigs, config = {}) => {
   const mergedConfig = { ...DefaultDrawerConfig, ...config };
+
   const {
-    containerConfig,
-    drawerWidth,
-    drawerLockMode,
-    contentComponent,
-    contentOptions,
-    drawerPosition,
-    useNativeAnimations,
-    drawerBackgroundColor,
-    drawerOpenRoute,
-    drawerCloseRoute,
-    drawerToggleRoute,
-    ...tabsConfig
+    order,
+    paths,
+    initialRouteName,
+    backBehavior,
+    ...drawerConfig
   } = mergedConfig;
 
-  const contentRouter = TabRouter(routeConfigs, tabsConfig);
+  const routerConfig = {
+    order,
+    paths,
+    initialRouteName,
+    backBehavior,
+  };
 
-  const drawerRouter = TabRouter(
-    {
-      [drawerCloseRoute]: {
-        screen: createNavigator(
-          contentRouter,
-          routeConfigs,
-          config,
-          NavigatorTypes.DRAWER
-        )((props: React.ElementProps<typeof DrawerScreen>) => (
-          <DrawerScreen {...props} />
-        )),
-      },
-      [drawerOpenRoute]: {
-        screen: () => null,
-      },
-      [drawerToggleRoute]: {
-        screen: () => null,
-      },
-    },
-    {
-      initialRouteName: drawerCloseRoute,
-    }
-  );
+  const drawerRouter = DrawerRouter(routeConfigs, routerConfig);
 
-  const navigator = createNavigator(
-    drawerRouter,
-    routeConfigs,
-    config,
-    NavigatorTypes.DRAWER
-  )((props: DrawerNavigatorProps) => (
-    <DrawerView
-      {...props}
-      drawerBackgroundColor={drawerBackgroundColor}
-      drawerLockMode={drawerLockMode}
-      useNativeAnimations={useNativeAnimations}
-      drawerWidth={drawerWidth}
-      contentComponent={contentComponent}
-      contentOptions={contentOptions}
-      drawerPosition={drawerPosition}
-      drawerOpenRoute={drawerOpenRoute}
-      drawerCloseRoute={drawerCloseRoute}
-      drawerToggleRoute={drawerToggleRoute}
-    />
-  ));
+  const navigator = createNavigator(DrawerView, drawerRouter, drawerConfig);
 
   return createNavigationContainer(navigator);
 };

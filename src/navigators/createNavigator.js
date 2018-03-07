@@ -1,58 +1,81 @@
-/* @flow */
+import React from 'react';
 
-import * as React from 'react';
+import getChildEventSubscriber from '../getChildEventSubscriber';
+import addNavigationHelpers from '../addNavigationHelpers';
 
-import type {
-  NavigationRouter,
-  NavigationNavigator,
-  NavigationNavigatorProps,
-  NavigationRouteConfigMap,
-  NavigationState,
-  NavigationScreenProp,
-} from '../TypeDefinition';
+function createNavigator(NavigatorView, router, navigationConfig) {
+  class Navigator extends React.Component {
+    static router = router;
+    static navigationOptions = null;
 
-import type { NavigatorType } from './NavigatorTypes';
+    childEventSubscribers = {};
 
-// Props we want createNavigator to Inject
-type RouterProp<S: NavigationState, O: {}> = {
-  router: NavigationRouter<S, O>,
-};
-
-// NavigatorCreator type
-type _NavigatorCreator<NavigationViewProps: {}, S: NavigationState, O: {}> = (
-  NavigationView: React.ComponentType<RouterProp<S, O> & NavigationViewProps>
-) => NavigationNavigator<S, O, NavigationViewProps>;
-
-/**
- * Creates a navigator based on a router and a view that renders the screens.
- */
-export default function createNavigator<
-  S: NavigationState,
-  O: {},
-  NavigatorConfig: {},
-  NavigationViewProps: NavigationNavigatorProps<O, S>
->(
-  router: NavigationRouter<S, O>,
-  routeConfigs?: NavigationRouteConfigMap,
-  navigatorConfig?: NavigatorConfig,
-  navigatorType?: NavigatorType
-): _NavigatorCreator<NavigationViewProps, S, O> {
-  return (
-    NavigationView: React.ComponentType<RouterProp<S, O> & NavigationViewProps>
-  ): NavigationNavigator<S, O, NavigationViewProps> => {
-    class Navigator extends React.Component<NavigationViewProps> {
-      static router = router;
-
-      static routeConfigs = routeConfigs;
-      static navigatorConfig = navigatorConfig;
-      static navigatorType = navigatorType;
-      static navigationOptions = null;
-
-      render() {
-        return <NavigationView {...this.props} router={router} />;
-      }
+    // Cleanup subscriptions for routes that no longer exist
+    componentDidUpdate() {
+      const activeKeys = this.props.navigation.state.routes.map(r => r.key);
+      Object.keys(this.childEventSubscribers).forEach(key => {
+        if (!activeKeys.includes(key)) {
+          this.childEventSubscribers[key].removeAll();
+          delete this.childEventSubscribers[key];
+        }
+      });
     }
 
-    return Navigator;
-  };
+    // Remove all subscriptions
+    componentWillUnmount() {
+      Object.values(this.childEventSubscribers).map(s => s.removeAll());
+    }
+
+    _isRouteFocused = route => () => {
+      const { state } = this.props.navigation;
+      const focusedRoute = state.routes[state.index];
+      return route === focusedRoute;
+    };
+
+    render() {
+      const { navigation, screenProps } = this.props;
+      const { dispatch, state, addListener } = navigation;
+      const { routes } = state;
+
+      const descriptors = {};
+      routes.forEach(route => {
+        const getComponent = () =>
+          router.getComponentForRouteName(route.routeName);
+
+        if (!this.childEventSubscribers[route.key]) {
+          this.childEventSubscribers[route.key] = getChildEventSubscriber(
+            addListener,
+            route.key
+          );
+        }
+
+        const childNavigation = addNavigationHelpers({
+          dispatch,
+          state: route,
+          addListener: this.childEventSubscribers[route.key].addListener,
+          isFocused: this._isRouteFocused.bind(this, route),
+        });
+        const options = router.getScreenOptions(childNavigation, screenProps);
+        descriptors[route.key] = {
+          key: route.key,
+          getComponent,
+          options,
+          state: route,
+          navigation: childNavigation,
+        };
+      });
+
+      return (
+        <NavigatorView
+          screenProps={screenProps}
+          navigation={navigation}
+          navigationConfig={navigationConfig}
+          descriptors={descriptors}
+        />
+      );
+    }
+  }
+  return Navigator;
 }
+
+export default createNavigator;

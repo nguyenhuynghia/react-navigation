@@ -1,4 +1,3 @@
-/* @flow */
 /* eslint react/display-name:0 */
 
 import React from 'react';
@@ -6,8 +5,6 @@ import TabRouter from '../TabRouter';
 import StackRouter from '../StackRouter';
 
 import NavigationActions from '../../NavigationActions';
-
-import type { NavigationRoute, NavigationState } from '../../TypeDefinition';
 
 const INIT_ACTION = { type: NavigationActions.INIT };
 
@@ -30,6 +27,7 @@ describe('TabRouter', () => {
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
+      isTransitioning: false,
     };
     expect(state).toEqual(expectedState);
     const state2 = router.getStateForAction(
@@ -42,6 +40,7 @@ describe('TabRouter', () => {
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
+      isTransitioning: false,
     };
     expect(state2).toEqual(expectedState2);
     expect(router.getComponentForState(expectedState)).toEqual(ScreenA);
@@ -67,6 +66,7 @@ describe('TabRouter', () => {
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
+      isTransitioning: false,
     };
     expect(state).toEqual(expectedState);
     const state2 = router.getStateForAction(
@@ -79,6 +79,7 @@ describe('TabRouter', () => {
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
+      isTransitioning: false,
     };
     expect(state2).toEqual(expectedState2);
     expect(router.getComponentForState(expectedState)).toEqual(ScreenA);
@@ -102,6 +103,28 @@ describe('TabRouter', () => {
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
       ],
+      isTransitioning: false,
+    });
+  });
+
+  test('Can set the initial params', () => {
+    const router = TabRouter(
+      { Foo: BareLeafRouteConfig, Bar: BareLeafRouteConfig },
+      { initialRouteName: 'Bar', initialRouteParams: { name: 'Qux' } }
+    );
+    const state = router.getStateForAction({ type: NavigationActions.INIT });
+    expect(state).toEqual({
+      index: 1,
+      routes: [
+        { key: 'Foo', routeName: 'Foo', hidden: false },
+        {
+          key: 'Bar',
+          routeName: 'Bar',
+          hidden: false,
+          params: { name: 'Qux' },
+        },
+      ],
+      isTransitioning: false,
     });
   });
 
@@ -173,6 +196,7 @@ describe('TabRouter', () => {
     const state = router.getStateForAction(navAction);
     expect(state).toEqual({
       index: 1,
+      isTransitioning: false,
       routes: [
         {
           key: 'Foo',
@@ -181,6 +205,7 @@ describe('TabRouter', () => {
         },
         {
           index: 1,
+          isTransitioning: false,
           key: 'Baz',
           routeName: 'Baz',
           hidden: false,
@@ -224,12 +249,14 @@ describe('TabRouter', () => {
     let state = router.getStateForAction(navAction);
     expect(state).toEqual({
       index: 1,
+      isTransitioning: false,
       routes: [
         { key: 'Foo', routeName: 'Foo', hidden: false },
         {
           index: 0,
           key: 'Baz',
           routeName: 'Baz',
+          isTransitioning: false,
           hidden: false,
           routes: [
             { key: 'Boo', routeName: 'Boo', hidden: false },
@@ -250,6 +277,7 @@ describe('TabRouter', () => {
     );
     expect(state && state.routes[1]).toEqual({
       index: 0,
+      isTransitioning: false,
       key: 'Baz',
       routeName: 'Baz',
       hidden: false,
@@ -277,6 +305,7 @@ describe('TabRouter', () => {
     });
     expect(state).toEqual({
       index: 1,
+      isTransitioning: false,
       routes: [
         { key: 'Foo', routeName: 'Foo', hidden: false },
         {
@@ -284,6 +313,7 @@ describe('TabRouter', () => {
           key: 'Baz',
           routeName: 'Baz',
           hidden: false,
+          isTransitioning: false,
           routes: [
             { key: 'Foo', routeName: 'Foo', hidden: false },
             { key: 'Bar', routeName: 'Bar', hidden: false },
@@ -298,6 +328,7 @@ describe('TabRouter', () => {
     );
     expect(state2).toEqual({
       index: 1,
+      isTransitioning: false,
       routes: [
         { key: 'Foo', routeName: 'Foo', hidden: false },
         {
@@ -305,6 +336,7 @@ describe('TabRouter', () => {
           key: 'Baz',
           routeName: 'Baz',
           hidden: false,
+          isTransitioning: false,
           routes: [
             { key: 'Foo', routeName: 'Foo', hidden: false },
             { key: 'Bar', routeName: 'Bar', hidden: false },
@@ -343,18 +375,21 @@ describe('TabRouter', () => {
     const state = router.getStateForAction(INIT_ACTION);
     expect(state).toEqual({
       index: 0,
+      isTransitioning: false,
       routes: [
         {
           index: 0,
           key: 'Foo',
           routeName: 'Foo',
           hidden: false,
+          isTransitioning: false,
           routes: [
             {
               index: 0,
               key: 'Foo',
               routeName: 'Foo',
               hidden: false,
+              isTransitioning: false,
               routes: [
                 { key: 'Boo', routeName: 'Boo', hidden: false },
                 { key: 'Baz', routeName: 'Baz', hidden: false },
@@ -364,6 +399,7 @@ describe('TabRouter', () => {
               index: 0,
               key: 'Bar',
               routeName: 'Bar',
+              isTransitioning: false,
               hidden: false,
               routes: [
                 { key: 'Zoo', routeName: 'Zoo', hidden: false },
@@ -381,18 +417,21 @@ describe('TabRouter', () => {
     );
     expect(state2).toEqual({
       index: 0,
+      isTransitioning: false,
       routes: [
         {
           index: 1,
           key: 'Foo',
           routeName: 'Foo',
           hidden: false,
+          isTransitioning: false,
           routes: [
             {
               index: 0,
               key: 'Foo',
               routeName: 'Foo',
               hidden: false,
+              isTransitioning: false,
               routes: [
                 { key: 'Boo', routeName: 'Boo', hidden: false },
                 { key: 'Baz', routeName: 'Baz', hidden: false },
@@ -402,6 +441,7 @@ describe('TabRouter', () => {
               index: 1,
               key: 'Bar',
               routeName: 'Bar',
+              isTransitioning: false,
               hidden: false,
               routes: [
                 { key: 'Zoo', routeName: 'Zoo', hidden: false },
@@ -429,11 +469,13 @@ describe('TabRouter', () => {
     });
     expect(state4).toEqual({
       index: 0,
+      isTransitioning: false,
       routes: [
         {
           index: 1,
           key: 'Foo',
           routeName: 'Foo',
+          isTransitioning: false,
           hidden: false,
           routes: [
             {
@@ -441,6 +483,7 @@ describe('TabRouter', () => {
               key: 'Foo',
               routeName: 'Foo',
               hidden: false,
+              isTransitioning: false,
               routes: [
                 { key: 'Boo', routeName: 'Boo', hidden: false },
                 { key: 'Baz', routeName: 'Baz', hidden: false },
@@ -450,6 +493,7 @@ describe('TabRouter', () => {
               index: 1,
               key: 'Bar',
               routeName: 'Bar',
+              isTransitioning: false,
               hidden: false,
               routes: [
                 { key: 'Zoo', routeName: 'Zoo', hidden: false },
@@ -488,6 +532,7 @@ describe('TabRouter', () => {
     const state = router.getStateForAction({ type: NavigationActions.INIT });
     const expectedState = {
       index: 0,
+      isTransitioning: false,
       routes: [
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false },
@@ -497,6 +542,7 @@ describe('TabRouter', () => {
     const state2 = router.getStateForAction(expectedAction, state);
     const expectedState2 = {
       index: 1,
+      isTransitioning: false,
       routes: [
         { key: 'Foo', routeName: 'Foo', hidden: false },
         { key: 'Bar', routeName: 'Bar', hidden: false, params },
@@ -551,11 +597,13 @@ describe('TabRouter', () => {
 
     const state = {
       index: 0,
+      isTransitioning: false,
       routes: [
         {
           index: 1,
           key: 'Foo',
           routeName: 'Foo',
+          isTransitioning: false,
           routes: [
             { key: 'Boo', routeName: 'Boo', hidden: false },
             { key: 'Baz', routeName: 'Baz', hidden: false },
@@ -566,31 +614,6 @@ describe('TabRouter', () => {
     };
     const { path } = router.getPathAndParamsForState(state);
     expect(path).toEqual('f/Baz');
-  });
-
-  test('Maps old actions (uses "getStateForAction returns null when navigating to same tab" test)', () => {
-    global.console.warn = jest.fn();
-    const router = TabRouter(
-      { Foo: BareLeafRouteConfig, Bar: BareLeafRouteConfig },
-      { initialRouteName: 'Bar' }
-    );
-    const initAction = NavigationActions.mapDeprecatedActionAndWarn({
-      type: 'Init',
-    });
-    /* $FlowFixMe: these are for deprecated action names */
-    const state = router.getStateForAction(initAction);
-    const navigateAction = NavigationActions.mapDeprecatedActionAndWarn({
-      type: 'Navigate',
-      routeName: 'Bar',
-    });
-    /* $FlowFixMe: these are for deprecated action names */
-    const state2 = router.getStateForAction(navigateAction, state);
-    expect(state2).toEqual(null);
-    expect(console.warn).toBeCalledWith(
-      expect.stringContaining(
-        "The action type 'Init' has been renamed to 'Navigation/INIT'"
-      )
-    );
   });
 
   test('Can navigate to other tab (no router) with params', () => {
@@ -606,6 +629,7 @@ describe('TabRouter', () => {
 
     expect(state0).toEqual({
       index: 0,
+      isTransitioning: false,
       routes: [
         { key: 'a', routeName: 'a', hidden: false },
         { key: 'b', routeName: 'b', hidden: false },
@@ -621,11 +645,116 @@ describe('TabRouter', () => {
 
     expect(state1).toEqual({
       index: 1,
+      isTransitioning: false,
       routes: [
         { key: 'a', routeName: 'a', hidden: false },
         { key: 'b', routeName: 'b', hidden: false, params },
       ],
     });
+  });
+
+  test('Back actions are not propagated to inactive children', () => {
+    const ScreenA = () => <div />;
+    const ScreenB = () => <div />;
+    const ScreenC = () => <div />;
+    const InnerNavigator = () => <div />;
+    InnerNavigator.router = TabRouter({
+      a: { screen: ScreenA },
+      b: { screen: ScreenB },
+    });
+
+    const router = TabRouter(
+      {
+        inner: { screen: InnerNavigator },
+        c: { screen: ScreenC },
+      },
+      {
+        backBehavior: 'none',
+      }
+    );
+
+    const state0 = router.getStateForAction(INIT_ACTION);
+
+    const state1 = router.getStateForAction(
+      { type: NavigationActions.NAVIGATE, routeName: 'b' },
+      state0
+    );
+
+    const state2 = router.getStateForAction(
+      { type: NavigationActions.NAVIGATE, routeName: 'c' },
+      state1
+    );
+
+    const state3 = router.getStateForAction(
+      { type: NavigationActions.BACK },
+      state2
+    );
+
+    expect(state3).toEqual(state2);
+  });
+
+  test('Back behavior initialRoute works', () => {
+    const ScreenA = () => <div />;
+    const ScreenB = () => <div />;
+    const router = TabRouter({
+      a: { screen: ScreenA },
+      b: { screen: ScreenB },
+    });
+
+    const state0 = router.getStateForAction(INIT_ACTION);
+
+    const state1 = router.getStateForAction(
+      { type: NavigationActions.NAVIGATE, routeName: 'b' },
+      state0
+    );
+
+    const state2 = router.getStateForAction(
+      { type: NavigationActions.BACK },
+      state1
+    );
+
+    expect(state2).toEqual(state0);
+  });
+
+  test('pop action works as expected', () => {
+    const TestRouter = StackRouter({
+      foo: { screen: () => <div /> },
+      bar: { screen: () => <div /> },
+    });
+
+    const state = {
+      index: 3,
+      isTransitioning: false,
+      routes: [
+        { key: 'A', routeName: 'foo' },
+        { key: 'B', routeName: 'bar', params: { bazId: '321' } },
+        { key: 'C', routeName: 'foo' },
+        { key: 'D', routeName: 'bar' },
+      ],
+    };
+    const poppedState = TestRouter.getStateForAction(
+      NavigationActions.pop(),
+      state
+    );
+    expect(poppedState.routes.length).toBe(3);
+    expect(poppedState.index).toBe(2);
+    expect(poppedState.isTransitioning).toBe(true);
+
+    const poppedState2 = TestRouter.getStateForAction(
+      NavigationActions.pop({ n: 2, immediate: true }),
+      state
+    );
+    expect(poppedState2.routes.length).toBe(2);
+    expect(poppedState2.index).toBe(1);
+    expect(poppedState2.isTransitioning).toBe(false);
+
+    const poppedState3 = TestRouter.getStateForAction(
+      NavigationActions.pop({ n: 5 }),
+      state
+    );
+    expect(poppedState3.routes.length).toBe(1);
+    expect(poppedState3.index).toBe(0);
+    expect(poppedState3.isTransitioning).toBe(true);
   });
 
   test('Inner actions are only unpacked if the current tab matches', () => {
@@ -646,25 +775,17 @@ describe('TabRouter', () => {
     const screenApreState = {
       index: 0,
       key: 'Init',
+      isTransitioning: false,
       routeName: 'Foo',
       routes: [{ key: 'Init', routeName: 'Bar' }],
     };
     const preState = {
       index: 0,
+      isTransitioning: false,
       routes: [screenApreState],
     };
 
-    type ComparableRoute = {
-      routeName?: string,
-      routes?: Array<ComparableRoute>,
-    };
-
-    type RouteOrState =
-      | NavigationRoute
-      | NavigationState
-      | (NavigationRoute & NavigationState);
-
-    const comparable = (state: RouteOrState): ComparableRoute => {
+    const comparable = state => {
       let result = {};
       if (typeof state.routeName === 'string') {
         result = { routeName: state.routeName };

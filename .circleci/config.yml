@@ -24,20 +24,17 @@ jobs:
               tar -xz -C /tmp -f /tmp/docker-$VER.tgz
               mv /tmp/docker/* /usr/bin
             
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              # deploy website
-              cd website && yarn && cd ../
-              yarn run build-docs
-              ./scripts/deploy-website.sh
-
-              # deploy expo playground demo
-              # exp login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-              # cd examples/NavigationPlayground && exp publish
-            fi
+            yarn global add exp
+            set +x
+            exp login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+            set -x
+            cd examples/NavigationPlayground && yarn && exp publish --release-channel "${CIRCLE_SHA1}"
       - save_cache:
           key: v3-react-navigation-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache/yarn
-            - ~/react-navigation/website/node_modules
             - ~/react-navigation/examples/NavigationPlayground/node_modules
             - ~/react-navigation/examples/ReduxExample/node_modules
+notify:
+  webhooks:
+    - url: https://react-navigation-ci.now.sh
