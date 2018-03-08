@@ -99,20 +99,15 @@ const setParams = createAction(SET_PARAMS, payload => ({
   params: payload.params,
 }));
 
-const showTab = createAction(
-  SHOW_TAB,
-  (payload: { tabRouteName: string }): NavigationShowTabAction => ({
-    type: SHOW_TAB,
-    tabRouteName: payload.tabRouteName,
-  })
-);
-const hideTab = createAction(
-  HIDE_TAB,
-  (payload: { tabRouteName: string }): NavigationHideTabAction => ({
-    type: HIDE_TAB,
-    tabRouteName: payload.tabRouteName,
-  })
-);
+const showTab = createAction(SHOW_TAB, payload => ({
+  type: SHOW_TAB,
+  tabRouteName: payload.tabRouteName,
+}));
+
+const hideTab = createAction(HIDE_TAB, payload => ({
+  type: HIDE_TAB,
+  tabRouteName: payload.tabRouteName,
+}));
 
 const uri = createAction(URI, payload => ({
   type: URI,
