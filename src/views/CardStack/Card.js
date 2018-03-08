@@ -1,25 +1,11 @@
-/* @flow */
-
-import * as React from 'react';
-
+import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
-
 import createPointerEventsContainer from './PointerEventsContainer';
-
-import type { NavigationSceneRendererProps } from '../../TypeDefinition';
-
-type Props = {
-  ...$Exact<NavigationSceneRendererProps>,
-  children: React.ChildrenArray<*>,
-  onComponentRef: React.Ref<typeof Animated.View>,
-  pointerEvents: string,
-  style: any,
-};
 
 /**
  * Component that renders the scene as card for the <NavigationCardStack />.
  */
-class Card extends React.Component<Props> {
+class Card extends React.Component {
   render() {
     const { children, pointerEvents, style } = this.props;
     return (
@@ -36,7 +22,7 @@ class Card extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#E9E9EF',
+    backgroundColor: '#EFEFF4',
     bottom: 0,
     left: 0,
     position: 'absolute',

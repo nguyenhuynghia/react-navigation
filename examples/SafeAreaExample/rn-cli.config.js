@@ -4,14 +4,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const blacklist = require('metro-bundler/src/blacklist');
+const blacklist = require('metro/src/blacklist');
 
 module.exports = {
   getBlacklistRE() {
     return blacklist([
       /react\-navigation\/examples\/(?!SafeAreaExample).*/,
       /react\-navigation\/node_modules\/react-native\/(.*)/,
-      /react\-navigation\/node_modules\/react\/(.*)/
+      /react\-navigation\/node_modules\/react\/(.*)/,
     ]);
   },
   extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),

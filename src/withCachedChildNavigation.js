@@ -1,62 +1,65 @@
-/* @flow */
-
-import * as React from 'react';
-
+import React from 'react';
 import addNavigationHelpers from './addNavigationHelpers';
-
-import type {
-  NavigationScreenProp,
-  NavigationState,
-  NavigationRoute,
-} from './TypeDefinition';
-
-type InputProps<S: NavigationState> = {
-  navigation: NavigationScreenProp<S>,
-};
-type OutputProps = {
-  childNavigationProps: {
-    +[key: string]: NavigationScreenProp<NavigationRoute>,
-  },
-};
+import getChildEventSubscriber from './getChildEventSubscriber';
 
 /**
  * HOC which caches the child navigation items.
  */
-export default function withCachedChildNavigation<
-  S: NavigationState,
-  T: InputProps<S>
->(Comp: React.ComponentType<OutputProps & T>): React.ComponentType<T> {
-  const displayName: string = Comp.displayName || Comp.name;
-  return class extends React.PureComponent<T> {
+export default function withCachedChildNavigation(Comp) {
+  const displayName = Comp.displayName || Comp.name;
+  return class extends React.PureComponent {
     static displayName = `withCachedChildNavigation(${displayName})`;
+
+    _childEventSubscribers = {};
 
     componentWillMount() {
       this._updateNavigationProps(this.props.navigation);
     }
 
-    componentWillReceiveProps(nextProps: T) {
+    componentWillReceiveProps(nextProps) {
       this._updateNavigationProps(nextProps.navigation);
     }
 
-    _childNavigationProps: {
-      [key: string]: NavigationScreenProp<NavigationRoute>,
+    componentDidUpdate() {
+      const activeKeys = this.props.navigation.state.routes.map(
+        route => route.key
+      );
+      Object.keys(this._childEventSubscribers).forEach(key => {
+        if (!activeKeys.includes(key)) {
+          delete this._childEventSubscribers[key];
+        }
+      });
+    }
+
+    _isRouteFocused = route => () => {
+      const { state } = this.props.navigation;
+      const focusedRoute = state.routes[state.index];
+      return route === focusedRoute;
     };
 
-    _updateNavigationProps = (
-      navigation: NavigationScreenProp<NavigationState>
-    ) => {
+    _updateNavigationProps = navigation => {
       // Update props for each child route
       if (!this._childNavigationProps) {
         this._childNavigationProps = {};
       }
-      navigation.state.routes.forEach((route: *) => {
+      navigation.state.routes.forEach(route => {
         const childNavigation = this._childNavigationProps[route.key];
         if (childNavigation && childNavigation.state === route) {
           return;
         }
+
+        if (!this._childEventSubscribers[route.key]) {
+          this._childEventSubscribers[route.key] = getChildEventSubscriber(
+            navigation.addListener,
+            route.key
+          );
+        }
+
         this._childNavigationProps[route.key] = addNavigationHelpers({
           dispatch: navigation.dispatch,
           state: route,
+          isFocused: this._isRouteFocused.bind(this, route),
+          addListener: this._childEventSubscribers[route.key],
         });
       });
     };
