@@ -125,13 +125,13 @@ export default (
       // handle the action, to allow inner tabs to change first
       let activeTabIndex = state.index;
       const isBackEligible =
-        action.key == null || action.key === activeTabLastState.key;
-      if (
-        action.type === NavigationActions.BACK &&
-        isBackEligible &&
-        shouldBackNavigateToInitialRoute
-      ) {
-        activeTabIndex = initialRouteIndex;
+        !action.key || action.key === activeTabLastState.key;
+      if (action.type === NavigationActions.BACK) {
+        if (isBackEligible && shouldBackNavigateToInitialRoute) {
+          activeTabIndex = initialRouteIndex;
+        } else {
+          return state;
+        }
       }
       let didNavigate = false;
       if (action.type === NavigationActions.NAVIGATE) {
