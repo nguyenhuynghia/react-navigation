@@ -11,7 +11,7 @@ module.exports = {
     return blacklist([
       /react\-navigation\/examples\/(?!SafeAreaExample).*/,
       /react\-navigation\/node_modules\/react-native\/(.*)/,
-      /react\-navigation\/node_modules\/react\/(.*)/
+      /react\-navigation\/node_modules\/react\/(.*)/,
     ]);
   },
   extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),

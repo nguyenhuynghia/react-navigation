@@ -83,10 +83,14 @@ declare module 'react-native-scripts/build/bin/crna-entry.js' {
   declare module.exports: $Exports<'react-native-scripts/build/bin/crna-entry'>;
 }
 declare module 'react-native-scripts/build/bin/react-native-scripts.js' {
-  declare module.exports: $Exports<'react-native-scripts/build/bin/react-native-scripts'>;
+  declare module.exports: $Exports<
+    'react-native-scripts/build/bin/react-native-scripts'
+  >;
 }
 declare module 'react-native-scripts/build/scripts/android.js' {
-  declare module.exports: $Exports<'react-native-scripts/build/scripts/android'>;
+  declare module.exports: $Exports<
+    'react-native-scripts/build/scripts/android'
+  >;
 }
 declare module 'react-native-scripts/build/scripts/eject.js' {
   declare module.exports: $Exports<'react-native-scripts/build/scripts/eject'>;
@@ -101,7 +105,9 @@ declare module 'react-native-scripts/build/scripts/start.js' {
   declare module.exports: $Exports<'react-native-scripts/build/scripts/start'>;
 }
 declare module 'react-native-scripts/build/util/clearConsole.js' {
-  declare module.exports: $Exports<'react-native-scripts/build/util/clearConsole'>;
+  declare module.exports: $Exports<
+    'react-native-scripts/build/util/clearConsole'
+  >;
 }
 declare module 'react-native-scripts/build/util/expo.js' {
   declare module.exports: $Exports<'react-native-scripts/build/util/expo'>;

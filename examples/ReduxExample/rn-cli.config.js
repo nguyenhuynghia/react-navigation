@@ -11,7 +11,7 @@ module.exports = {
     return blacklist([
       /react\-navigation\/examples\/(?!ReduxExample).*/,
       /react\-navigation\/node_modules\/react-native\/(.*)/,
-      /react\-navigation\/node_modules\/react\/(.*)/
+      /react\-navigation\/node_modules\/react\/(.*)/,
     ]);
   },
   extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),

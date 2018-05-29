@@ -19,6 +19,7 @@ export default (routeConfigs, config = {}) => {
   const order = config.order || Object.keys(routeConfigs);
   const paths = config.paths || {};
   const initialRouteParams = config.initialRouteParams;
+  const hiddenTabs = config.hiddenTabs || [];
   const initialRouteName = config.initialRouteName || order[0];
   const initialRouteIndex = order.indexOf(initialRouteName);
   const backBehavior = config.backBehavior || 'initialRoute';
@@ -56,12 +57,14 @@ export default (routeConfigs, config = {}) => {
               key: routeName,
               routeName,
               params,
+              hidden: hiddenTabs.includes(routeName),
             };
           }
           return {
             key: routeName,
             routeName,
             params,
+            hidden: hiddenTabs.includes(routeName),
           };
         });
         state = {
@@ -182,6 +185,25 @@ export default (routeConfigs, config = {}) => {
           };
         }
       }
+      if (
+        action.type === NavigationActions.SHOW_TAB ||
+        action.type === NavigationActions.HIDE_TAB
+      ) {
+        // lets find the route of the tab to show/hide
+        const tabRouteName = action.tabRouteName;
+        const routes = [...state.routes];
+        for (let i: number = 0; i < routes.length; i++) {
+          if (routes[i].routeName === tabRouteName) {
+            // found the route, build the new state
+            routes[i].hidden = action.type === NavigationActions.HIDE_TAB;
+            return {
+              ...state,
+              routes,
+            };
+          }
+        }
+        // no routes seems to match tabRouteName, continue
+      }
       if (activeTabIndex !== state.index) {
         return {
           ...state,
@@ -213,7 +235,11 @@ export default (routeConfigs, config = {}) => {
         if (tabState !== routes[i]) {
           routes = [...routes];
           routes[i] = tabState;
-          index = i;
+          if (
+            action.type !== NavigationActions.SHOW_TAB &&
+            action.type !== NavigationActions.HIDE_TAB
+          )
+            index = i;
           return true;
         }
         return false;

@@ -7,10 +7,7 @@ import AppReducer from './src/reducers';
 import AppWithNavigationState from './src/navigators/AppNavigator';
 import { middleware } from './src/utils/redux';
 
-const store = createStore(
-  AppReducer,
-  applyMiddleware(middleware),
-);
+const store = createStore(AppReducer, applyMiddleware(middleware));
 
 class ReduxExampleApp extends React.Component {
   render() {

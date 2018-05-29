@@ -229,6 +229,7 @@ class TabBarBottom extends React.PureComponent {
           forceInset={{ bottom: 'always', top: 'never' }}
         >
           {routes.map((route, index) => {
+            if (route.hidden) return null;
             const focused = index === navigation.state.index;
             const scene = { route, index, focused };
             const onPress = getOnPress(previousScene, scene);

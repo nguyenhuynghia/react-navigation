@@ -12,6 +12,8 @@ const COMPLETE_TRANSITION = 'Navigation/COMPLETE_TRANSITION';
 const OPEN_DRAWER = 'Navigation/OPEN_DRAWER';
 const CLOSE_DRAWER = 'Navigation/CLOSE_DRAWER';
 const TOGGLE_DRAWER = 'Navigation/TOGGLE_DRAWER';
+const SHOW_TAB = 'Navigation/SHOW_TAB';
+const HIDE_TAB = 'Navigation/HIDE_TAB';
 
 const createAction = (type, fn) => {
   fn.toString = () => type;
@@ -105,6 +107,16 @@ const uri = createAction(URI, payload => ({
   uri: payload.uri,
 }));
 
+const showTab = createAction(SHOW_TAB, payload => ({
+  type: SHOW_TAB,
+  tabRouteName: payload.tabRouteName,
+}));
+
+const hideTab = createAction(HIDE_TAB, payload => ({
+  type: HIDE_TAB,
+  tabRouteName: payload.tabRouteName,
+}));
+
 const completeTransition = createAction(COMPLETE_TRANSITION, payload => ({
   type: COMPLETE_TRANSITION,
   key: payload && payload.key,
@@ -136,6 +148,8 @@ export default {
   OPEN_DRAWER,
   CLOSE_DRAWER,
   TOGGLE_DRAWER,
+  SHOW_TAB,
+  HIDE_TAB,
 
   // Action creators
   back,
@@ -148,6 +162,8 @@ export default {
   replace,
   setParams,
   uri,
+  showTab,
+  hideTab,
   completeTransition,
   openDrawer,
   closeDrawer,

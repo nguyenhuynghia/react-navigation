@@ -31,7 +31,8 @@ const MyNavScreen = ({ navigation, banner }) => (
               headerVisible:
                 !navigation.state.params ||
                 !navigation.state.params.headerVisible,
-            })}
+            })
+          }
         />
       )}
       <Button onPress={() => navigation.goBack(null)} title="Go back" />

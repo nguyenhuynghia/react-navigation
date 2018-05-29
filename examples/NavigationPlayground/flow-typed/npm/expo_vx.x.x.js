@@ -606,7 +606,9 @@ declare module 'expo/src/effects/LinearGradient.ios.js' {
   declare module.exports: $Exports<'expo/src/effects/LinearGradient.ios'>;
 }
 declare module 'expo/src/environment/__tests__/validate-test.js' {
-  declare module.exports: $Exports<'expo/src/environment/__tests__/validate-test'>;
+  declare module.exports: $Exports<
+    'expo/src/environment/__tests__/validate-test'
+  >;
 }
 declare module 'expo/src/environment/logging.js' {
   declare module.exports: $Exports<'expo/src/environment/logging'>;
@@ -630,7 +632,9 @@ declare module 'expo/src/facebook-ads/index.js' {
   declare module.exports: $Exports<'expo/src/facebook-ads/index'>;
 }
 declare module 'expo/src/facebook-ads/InterstitialAdManager.js' {
-  declare module.exports: $Exports<'expo/src/facebook-ads/InterstitialAdManager'>;
+  declare module.exports: $Exports<
+    'expo/src/facebook-ads/InterstitialAdManager'
+  >;
 }
 declare module 'expo/src/facebook-ads/NativeAdsManager.js' {
   declare module.exports: $Exports<'expo/src/facebook-ads/NativeAdsManager'>;
@@ -678,10 +682,14 @@ declare module 'expo/src/launch/AppLoading.js' {
   declare module.exports: $Exports<'expo/src/launch/AppLoading'>;
 }
 declare module 'expo/src/launch/AppLoadingNativeWrapper.android.js' {
-  declare module.exports: $Exports<'expo/src/launch/AppLoadingNativeWrapper.android'>;
+  declare module.exports: $Exports<
+    'expo/src/launch/AppLoadingNativeWrapper.android'
+  >;
 }
 declare module 'expo/src/launch/AppLoadingNativeWrapper.ios.js' {
-  declare module.exports: $Exports<'expo/src/launch/AppLoadingNativeWrapper.ios'>;
+  declare module.exports: $Exports<
+    'expo/src/launch/AppLoadingNativeWrapper.ios'
+  >;
 }
 declare module 'expo/src/launch/registerRootComponent.js' {
   declare module.exports: $Exports<'expo/src/launch/registerRootComponent'>;
@@ -699,13 +707,19 @@ declare module 'expo/src/logs/__tests__/Logs-test.js' {
   declare module.exports: $Exports<'expo/src/logs/__tests__/Logs-test'>;
 }
 declare module 'expo/src/logs/__tests__/LogSerialization-test.js' {
-  declare module.exports: $Exports<'expo/src/logs/__tests__/LogSerialization-test'>;
+  declare module.exports: $Exports<
+    'expo/src/logs/__tests__/LogSerialization-test'
+  >;
 }
 declare module 'expo/src/logs/__tests__/RemoteConsole-test.js' {
-  declare module.exports: $Exports<'expo/src/logs/__tests__/RemoteConsole-test'>;
+  declare module.exports: $Exports<
+    'expo/src/logs/__tests__/RemoteConsole-test'
+  >;
 }
 declare module 'expo/src/logs/__tests__/RemoteLogging-test.js' {
-  declare module.exports: $Exports<'expo/src/logs/__tests__/RemoteLogging-test'>;
+  declare module.exports: $Exports<
+    'expo/src/logs/__tests__/RemoteLogging-test'
+  >;
 }
 declare module 'expo/src/logs/__tests__/RemoteLogs-test.js' {
   declare module.exports: $Exports<'expo/src/logs/__tests__/RemoteLogs-test'>;
@@ -759,19 +773,27 @@ declare module 'expo/src/Segment.js' {
   declare module.exports: $Exports<'expo/src/Segment'>;
 }
 declare module 'expo/src/sensor/__tests__/Accelerometer-test.js' {
-  declare module.exports: $Exports<'expo/src/sensor/__tests__/Accelerometer-test'>;
+  declare module.exports: $Exports<
+    'expo/src/sensor/__tests__/Accelerometer-test'
+  >;
 }
 declare module 'expo/src/sensor/__tests__/DeviceMotion-test.js' {
-  declare module.exports: $Exports<'expo/src/sensor/__tests__/DeviceMotion-test'>;
+  declare module.exports: $Exports<
+    'expo/src/sensor/__tests__/DeviceMotion-test'
+  >;
 }
 declare module 'expo/src/sensor/__tests__/DeviceSensor-test.js' {
-  declare module.exports: $Exports<'expo/src/sensor/__tests__/DeviceSensor-test'>;
+  declare module.exports: $Exports<
+    'expo/src/sensor/__tests__/DeviceSensor-test'
+  >;
 }
 declare module 'expo/src/sensor/__tests__/Gyroscope-test.js' {
   declare module.exports: $Exports<'expo/src/sensor/__tests__/Gyroscope-test'>;
 }
 declare module 'expo/src/sensor/__tests__/Magnetometer-test.js' {
-  declare module.exports: $Exports<'expo/src/sensor/__tests__/Magnetometer-test'>;
+  declare module.exports: $Exports<
+    'expo/src/sensor/__tests__/Magnetometer-test'
+  >;
 }
 declare module 'expo/src/sensor/Accelerometer.js' {
   declare module.exports: $Exports<'expo/src/sensor/Accelerometer'>;

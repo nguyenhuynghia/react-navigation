@@ -20,8 +20,8 @@ describe('DrawerRouter', () => {
       index: 0,
       isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', params: undefined },
-        { key: 'Bar', routeName: 'Bar', params: undefined },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params: undefined },
       ],
       isDrawerOpen: false,
     };
@@ -34,8 +34,8 @@ describe('DrawerRouter', () => {
       index: 1,
       isTransitioning: false,
       routes: [
-        { key: 'Foo', routeName: 'Foo', params: undefined },
-        { key: 'Bar', routeName: 'Bar', params: undefined },
+        { key: 'Foo', routeName: 'Foo', hidden: false, params: undefined },
+        { key: 'Bar', routeName: 'Bar', hidden: false, params: undefined },
       ],
       isDrawerOpen: false,
     };
